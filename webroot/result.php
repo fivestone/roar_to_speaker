@@ -25,7 +25,7 @@ include 'config.php';
         </div>
         <div id="roarBlock" style="width: 300px; height: 50px; background-color: green;"></div>
         <div class="form-group">
-            <label for="resultArea">Results:</label>
+            <label for="resultArea" id="resultLabel">Results</label>
             <textarea id="resultArea" class="form-control" rows="10" readonly></textarea>
         </div>
     </div>
@@ -37,7 +37,7 @@ include 'config.php';
             let timerId;
             const loop = async () => {
                 callback();
-                return (timer = setTimeout(loop, interval));
+                return (timerId = setTimeout(loop, interval));
             };
             return {
                 start: function() {
@@ -53,10 +53,11 @@ include 'config.php';
 
         const intervalManager = doInterval(fetch_msg_once);
 
-        let count = 0;
+        // let count = 0;
 
         function fetch_msg_once(){
-            console.log('Number...', count);
+        //    count++;
+        //    console.log('Number...', count);
             fetch('msg_queue.php')
                 .then(response => response.json())
                 .then(data => {
@@ -108,8 +109,20 @@ include 'config.php';
         function sleep(ms) {
             return new Promise(val => setTimeout(val, ms));
         }
-        document.getElementById('startBtn').addEventListener('click', intervalManager.start);
-        document.getElementById('stopBtn').addEventListener('click', intervalManager.end);
+        document.getElementById('startBtn').addEventListener('click', function() {
+            document.getElementById('resultLabel').textContent = 'Results - Start receiving';
+            intervalManager.start();
+        });
+        document.getElementById('stopBtn').addEventListener('click', function() {
+            document.getElementById('resultLabel').textContent = 'Results - Stop receiving';
+            intervalManager.end();
+        });
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            intervalManager.end();
+            document.getElementById('resultLabel').textContent = 'Results';
+            document.getElementById('resultArea').value = '';
+            fetch('msg_queue.php?reset=1');
+        });
 
         document.getElementById('test').addEventListener('click', fetch_msg_once);
 

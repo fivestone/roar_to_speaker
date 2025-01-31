@@ -14,6 +14,14 @@ include 'config.php';
 $redis = new Redis();
 $redis->connect($redis_host, $redis_port);
 
+// with parameter reset=1, clear the message queue
+if(isset($_GET['reset']) && $_GET['reset'] == '1') {
+    $redis->del($redis_key);
+    echo json_encode(['messages' => []]);
+    exit();
+}
+
+// Fetch all messages from the queue
 $new_msgs = [];
 while(true) {
     $message = $redis->lpop($redis_key);
