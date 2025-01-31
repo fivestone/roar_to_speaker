@@ -33,14 +33,21 @@ apk add --no-cache php84-pecl-redis
 
 3. Start a Redis service
 4. Copy the files in /webroot/ to any web folder.
+5. In config.php, change the redis address (usually 127.0.0.1), and the admin password.
 
 #### docker 
 
 ```
 docker compose up -d
 ```
+In config.php, change the admin password.
 
 ### Built with
 - PHP
 - BootStrap
 - Jquery
+
+### Acknowledgement
+
+The Dockerfile environment is built based on TrafeX's Docker image.
+https://github.com/TrafeX/docker-php-nginx
