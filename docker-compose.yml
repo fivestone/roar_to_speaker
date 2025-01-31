@@ -1,0 +1,14 @@
+services:
+
+  nginx-php:
+    build:
+      context: ./build
+      dockerfile: Dockerfile
+#     args:
+#       buildno: 1
+    ports:
+     - "8080:8080"
+    volumes:
+      - ./webroot:/var/www/html/
+  redis:
+    image: redis:alpine
