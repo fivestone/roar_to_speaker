@@ -50,4 +50,5 @@ In config.php, change the admin password.
 ### Acknowledgement
 
 The Dockerfile environment is built based on TrafeX's Docker image.
+
 https://github.com/TrafeX/docker-php-nginx
