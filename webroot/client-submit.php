@@ -1,5 +1,5 @@
 <?php
-// Handle the form submission
+include_once('init.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -14,11 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message['user'] = isset($_POST["input_name"]) ? $_POST["input_name"] : null;
     }
 
-    include 'config.php';
-    $redis = new Redis();
-    $redis->connect($redis_host, $redis_port);
-
-    $redis->rpush($redis_key, json_encode($message));
+    Config_All::push_message($message);
 }
 
 // Redirect back to index.php

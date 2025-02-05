@@ -1,13 +1,22 @@
 <?php
+include_once('init.php');
 session_start();
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
-    // Validate the password
-    include 'config.php';
-    if ($password === $admin_password) {
+    if (RESET_PASSWORD == true) {
+        $admin_password = DEFAULT_PASSWORD;
+    } else {
+        // Validate the password
+        $admin_password = Config_All::get_Value('admin_password');
+        if (empty($admin_password)) 
+        {
+            $admin_password = $default_password;
+        }
+    }
+    if (md5($password) === $admin_password) {
         // Password is correct, redirect to the admin page
         $_SESSION['is_admin'] = 1;
         header("Location: result.php");
@@ -47,8 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
 </body>
 </html>

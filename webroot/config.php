@@ -1,10 +1,12 @@
 <?php
-$admin_password = 'password';
+define('REDIS_HOST','redis');
+define('REDIS_PORT',6379);
 
-$env_interval_milliseconds = 2000;
-$env_roar_milliseconds = 500;
+define("DEFAULT_PASSWORD", md5('password'));
+define("RESET_PASSWORD", false);
 
-$redis_host = 'redis';
-$redis_port = 6379;
-$redis_key = 'fs_roar_msgs';
+define('ENV_INTERVAL_MILLISECONDS', 2000);
+define('ENV_ROAR_MILLSECONDS', 500);
+
+
 ?>

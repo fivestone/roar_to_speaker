@@ -1,10 +1,10 @@
 <?php
+include_once('init.php');
 session_start();
 if ($_SESSION['is_admin'] != 1) {
     header("Location: ./login.php");
     exit();
 }
-include 'config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,6 @@ include 'config.php';
             <button id="startBtn" class="btn btn-success">Start</button>
             <button id="stopBtn" class="btn btn-danger">Stop</button>
             <button id="resetBtn" class="btn btn-warning">Reset</button>
-            <button id="logoutBtn" class="btn btn-secondary" onclick="window.location.href='logout.php'">Logout</button>
             <button id="test" class="btn btn-info">Test</button>
         </div>
         <div id="roarBlock" style="width: 300px; height: 50px; background-color: green;"></div>
@@ -28,12 +27,13 @@ include 'config.php';
             <label for="resultArea" id="resultLabel">Results</label>
             <textarea id="resultArea" class="form-control" rows="10" readonly></textarea>
         </div>
+        <a href="./" class="btn btn-link">Send Reaction</a> - <a href="./admin-settings.php" class="btn btn-link">Settings</a> - <a href="./logout.php" class="btn btn-link">Logout</a>
     </div>
     <script src="./js/jquery-3.5.1.min.js"></script>
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script>
-        function doInterval(callback, interval=<?php echo $env_interval_milliseconds; ?>) {
+        function doInterval(callback, interval=<?php echo ENV_INTERVAL_MILLISECONDS; ?>) {
             let timerId;
             const loop = async () => {
                 callback();
@@ -53,11 +53,8 @@ include 'config.php';
 
         const intervalManager = doInterval(fetch_msg_once);
 
-        // let count = 0;
-
         function fetch_msg_once(){
-        //    count++;
-        //    console.log('Number...', count);
+
             fetch('msg_queue.php')
                 .then(response => response.json())
                 .then(data => {
@@ -88,7 +85,7 @@ include 'config.php';
                     roarBlock.style.backgroundColor = 'red';
                     setTimeout(() => {
                         roarBlock.style.backgroundColor = 'green';
-                    }, <?php echo $env_roar_milliseconds; ?>);
+                    }, <?php echo ENV_ROAR_MILLSECONDS; ?>);
                 }
                 else {
                     msg_display += message.comment;

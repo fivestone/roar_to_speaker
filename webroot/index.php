@@ -7,12 +7,18 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<?php
+include_once('init.php');
+$program_settings = Config_All::get_Settings();
+?>
     <div class="container">
+        <h1>Send Your Reaction</h1>
+        <p><?php echo $program_settings['programDescription']; ?></p>
         <form id="main_form" method="post" action="./client-submit.php">
+            <button type="submit" id="submit_roar" class="btn btn-danger btn-lg btn-block mb-8"><?php echo $program_settings['roarButtonMessage']; ?></button>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <input type="hidden" id="msg_type" name="msg_type">
-
                     <label>Name</label>
                     <input type="input" class="form-control" id="input_name" name="input_name" placeholder="Name">
 
@@ -28,8 +34,9 @@
                     <input type="textarea" height="40" class="form-control" id="input_comment" name="input_comment" placeholder="What's on your mind?">                    
                 </div>
             </div>
-            <button type="submit" id="submit_msg" class="btn btn-primary">Submit your comment</button>, or just <button type="submit"  id="submit_roar" class="btn btn-danger">ROAR</button> !!!
+            <button type="submit" id="submit_msg" class="btn btn-primary">Submit your comment</button>
         </form>
+        <a href="./result.php" class="btn btn-link">Admin Panel</a>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -67,8 +74,8 @@
             document.getElementById("main_form").submit();
         }
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
 </body>
 </html>
